@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Camden Rine">
-<meta name="dcterms.date" content="2025-11-17">
+<meta name="dcterms.date" content="2025-12-05">
 
 <title>Did Jayson Tatum Get Snubbed of Finals MVP in 2023-24? – Camden Rine’s Sports Site</title>
 <style>
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -124,6 +158,7 @@ ul.task-list li input[type="checkbox"] {
                 <div class="quarto-category">Jayson Tatum</div>
                 <div class="quarto-category">NBA Finals</div>
                 <div class="quarto-category">Jaylen Brown</div>
+                <div class="quarto-category">NBA Greats</div>
               </div>
                   </div>
   </div>
@@ -141,7 +176,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 17, 2025</p>
+        <p class="date">December 5, 2025</p>
       </div>
     </div>
     
@@ -160,6 +195,719 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<p>While the 2023-24 NBA Finals was a long time coming and huge celebration for Celtics fans, it sparked up an interesting debate in a time of success. Should Jayson Tatum of won the Finals MVP over Jaylen Brown? While Brown ultimately took home the award, the stats and overall impact make the conversation a lot more complicated than it may appear.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(waffle)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbump)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>avg <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Project 2 Data - FinalsAverages.csv"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>JB <span class="ot">&lt;-</span> avg <span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    NAME <span class="sc">==</span> <span class="st">"Jaylen Brown 23-24"</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Pierce <span class="ot">&lt;-</span> avg <span class="sc">|&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    NAME <span class="sc">==</span> <span class="st">"Paul Pierce 07-08"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>SGA <span class="ot">&lt;-</span> avg <span class="sc">|&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    NAME <span class="sc">==</span> <span class="st">"Shai Gilgeous-Alexander 24-25"</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>Joker <span class="ot">&lt;-</span> avg <span class="sc">|&gt;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    NAME <span class="sc">==</span> <span class="st">"Nikola Jokić 22-23"</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>avg, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(NAME, PPG), <span class="at">weight=</span>PPG), <span class="at">fill =</span> <span class="st">"lightgrey"</span>) <span class="sc">+</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>JB, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(NAME, PPG), <span class="at">weight=</span>PPG), <span class="at">fill =</span> <span class="st">"#008348"</span>) <span class="sc">+</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>Pierce, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(NAME, PPG), <span class="at">weight=</span>PPG), <span class="at">fill =</span> <span class="st">"#008348"</span>) <span class="sc">+</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>SGA, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(NAME, PPG), <span class="at">weight=</span>PPG), <span class="at">fill =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>Joker, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(NAME, PPG), <span class="at">weight=</span>PPG), <span class="at">fill =</span> <span class="st">"yellow"</span>) <span class="sc">+</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Season and Player"</span>, </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"Points Per Game in Finals"</span>, </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"Where Does The Actual Winner Jaylen Brown, Stack up Against the Rest?"</span>, </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Why is Brown so much lower compared to previous winners?"</span>, </span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Basketball Reference and StatMuse | By Camden Rine"</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This first puts Jaylen Brown’s scoring into context compared to other Finals MVP winners in the modern era. What immediately stands out is Brown’s point average is far below previous winners. Most winners of the award sit around that 24-30 points per game threshold, which Brown is below.</p>
+<p>This does not mean Brown is not deserving of the award by any means, but it helps explain why many people argued that Jayson Tatum may have had the overall stronger case. This also potentially shows that the Celtics won in a year where they were incredibly balanced. The scoring load was spread between many players, because of that, traditional MVP scoring standards might not apply.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>totalpoints <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Tatum"</span><span class="ot">=</span><span class="dv">111</span>, <span class="st">"Brown"</span><span class="ot">=</span><span class="dv">104</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>totalrebounds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Tatum"</span><span class="ot">=</span><span class="dv">39</span>, <span class="st">"Brown"</span><span class="ot">=</span><span class="dv">23</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>totalassists <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Tatum"</span><span class="ot">=</span><span class="dv">36</span>, <span class="st">"Brown"</span><span class="ot">=</span><span class="dv">15</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">iron</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">waffle</span>(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  totalpoints<span class="sc">/</span><span class="dv">3</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">rows =</span> <span class="dv">5</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"#008348"</span>)) <span class="sc">+</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">x=</span><span class="st">"1 Square = 3 Points"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">title=</span><span class="st">"Tatum vs. Brown: By The Numbers"</span>, </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">subtitle=</span><span class="st">"Tatum surpassed Brown in all major catagories."</span>) <span class="sc">+</span> </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme</span>(</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">19</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a> <span class="fu">waffle</span>(</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>   totalrebounds, </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">rows =</span> <span class="dv">5</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>   <span class="at">x =</span> <span class="st">"1 Square = 1 Rebound"</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"#008348"</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a> <span class="fu">waffle</span>(</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>   totalassists, </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>   <span class="at">rows =</span> <span class="dv">5</span>, </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>   <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"#008348"</span>, <span class="st">"white"</span>)) <span class="sc">+</span> </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>     <span class="at">x =</span> <span class="st">"1 Square = 1 Assist"</span>,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>     <span class="at">caption=</span><span class="st">"Source: Basketball Reference and StatMuse | Graphic by Camden Rine"</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This really breaks down the debate into its simplest form. Who had more points, rebounds and assists? Here the results are pretty hard to ignore, Jayson Tatum is ahead of Brown in every major statistical category. What this really signifies is how much more responsibility Tatum had to carry across the whole Finals. He had to lead the team in rebounding and assists, while also being expected to score the most, which he did all of these.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gamebygame <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Project 2 Data - BrownvTatumbygame copy.csv"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bump</span>(<span class="at">data=</span>gamebygame, <span class="fu">aes</span>(<span class="at">x=</span>Game, <span class="at">y=</span>PTS, <span class="at">color=</span>Player)) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data=</span>gamebygame, <span class="fu">aes</span>(<span class="at">x=</span>Game, <span class="at">y=</span>PTS, <span class="at">color=</span>Player), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"black"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"#008348"</span>)) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Finals Game"</span>, </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"Points"</span>, </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"Jayson Tatum Starts Slow But Steps Up When It Matters "</span>, </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Jaylen Brown started hot, but Tatum took over in the late stages"</span>, </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Basketball Reference and StatMuse | By Camden Rine"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>While this looks simple, this highlights one of the biggest storylines of the Finals and of Jayson Tatum’s career as a whole. A lot of NBA media and NBA Twitter think that Jayson Tatum “chokes” in big moments. This chart completely disproves that, Tatum stepped up biggest when it mattered most. While Brown had a better start than Tatum, Tatum continually got better throughout the series, as well as a stellar title-clinching game five. This late-series surge by Tatum is important because while Finals MVP often comes down to overall production and numbers, it also comes down to clutch moments and games, which I think the edge clearly goes to Tatum. When the stakes rose, Tatum elevated his game to the next level.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tatumvbrown <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Project 2 Data - TatumvBrownAverages.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>wantedstats <span class="ot">&lt;-</span> tatumvbrown <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, PPG, MPG, RPG, SPG, APG, BPG, FGA, <span class="st">`</span><span class="at">FG%</span><span class="st">`</span>, <span class="st">`</span><span class="at">3PA</span><span class="st">`</span>, <span class="st">`</span><span class="at">3P%</span><span class="st">`</span>, <span class="st">`</span><span class="at">TS%</span><span class="st">`</span>, TOV, PLUSMINUS)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>wantedstats <span class="sc">|&gt;</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">TS%</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"True Shooting Percentage"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">PPG =</span> <span class="st">"Points"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">MPG =</span> <span class="st">"Minutes"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">RPG =</span> <span class="st">"Rebounds"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">SPG =</span> <span class="st">"Steals"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">APG =</span> <span class="st">"Assists"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">BPG =</span> <span class="st">"Blocks"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">FGA =</span> <span class="st">"Shots"</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">3PA</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Threes Attempted"</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">TOV =</span> <span class="st">"Turnovers"</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">PLUSMINUS =</span> <span class="st">"Plus/Minus"</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Tatum Looks Like the Better Candidate"</span>,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Jayson Tatum surpasses Jaylen brown in many statistical averages, what about efficiency?"</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">tab_style</span>(</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">align =</span> <span class="st">"left"</span>),</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"title"</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">tab_style</span>(</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">align =</span> <span class="st">"left"</span>),</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"subtitle"</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"**By:** Camden Rine  |  **Source:** Basketball Reference and StatMuse"</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>     <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">everything</span>()),</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>     <span class="at">style =</span> <span class="fu">list</span>(</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_borders</span>(<span class="at">sides =</span> <span class="st">"bottom"</span>, <span class="at">weight =</span> <span class="fu">px</span>(<span class="dv">4</span>)),</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">size=</span><span class="dv">13</span>)</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">|&gt;</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_row_striping</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_table_lines</span>(<span class="st">"none"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a> <span class="fu">tab_style</span>(</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">list</span>(</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#008348"</span>),</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"white"</span>)</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_body</span>(</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>      <span class="at">rows =</span> Name <span class="sc">==</span> <span class="st">"Jayson Tatum"</span>)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="oestyotdsg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oestyotdsg table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#oestyotdsg thead, #oestyotdsg tbody, #oestyotdsg tfoot, #oestyotdsg tr, #oestyotdsg td, #oestyotdsg th {
+  border-style: none;
+}
+
+#oestyotdsg p {
+  margin: 0;
+  padding: 0;
+}
+
+#oestyotdsg .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#oestyotdsg .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#oestyotdsg .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#oestyotdsg .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#oestyotdsg .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#oestyotdsg .gt_bottom_border {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#oestyotdsg .gt_col_headings {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#oestyotdsg .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#oestyotdsg .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#oestyotdsg .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#oestyotdsg .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#oestyotdsg .gt_column_spanner {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#oestyotdsg .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#oestyotdsg .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#oestyotdsg .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#oestyotdsg .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#oestyotdsg .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#oestyotdsg .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: none;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#oestyotdsg .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#oestyotdsg .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#oestyotdsg .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#oestyotdsg .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#oestyotdsg .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#oestyotdsg .gt_first_summary_row {
+  border-top-style: none;
+  border-top-color: #D3D3D3;
+}
+
+#oestyotdsg .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#oestyotdsg .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#oestyotdsg .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#oestyotdsg .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: none;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#oestyotdsg .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: none;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#oestyotdsg .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#oestyotdsg .gt_table_body {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#oestyotdsg .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#oestyotdsg .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#oestyotdsg .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#oestyotdsg .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#oestyotdsg .gt_left {
+  text-align: left;
+}
+
+#oestyotdsg .gt_center {
+  text-align: center;
+}
+
+#oestyotdsg .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#oestyotdsg .gt_font_normal {
+  font-weight: normal;
+}
+
+#oestyotdsg .gt_font_bold {
+  font-weight: bold;
+}
+
+#oestyotdsg .gt_font_italic {
+  font-style: italic;
+}
+
+#oestyotdsg .gt_super {
+  font-size: 65%;
+}
+
+#oestyotdsg .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#oestyotdsg .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#oestyotdsg .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#oestyotdsg .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#oestyotdsg .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#oestyotdsg .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#oestyotdsg .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#oestyotdsg .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#oestyotdsg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="14" class="gt_heading gt_title gt_font_normal" style="text-align: left; color: #000000; font-weight: bold;">Tatum Looks Like the Better Candidate</th>
+</tr>
+<tr class="gt_heading even">
+<th colspan="14" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="text-align: left; color: #000000;">Jayson Tatum surpasses Jaylen brown in many statistical averages, what about efficiency?</th>
+</tr>
+<tr class="gt_col_headings header">
+<th id="Name" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">Name</th>
+<th id="PPG" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">Points</th>
+<th id="MPG" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">Minutes</th>
+<th id="RPG" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">Rebounds</th>
+<th id="SPG" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">Steals</th>
+<th id="APG" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">Assists</th>
+<th id="BPG" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">Blocks</th>
+<th id="FGA" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">Shots</th>
+<th id="FG%" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">FG%</th>
+<th id="a3PA" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">Threes Attempted</th>
+<th id="a3P%" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">3P%</th>
+<th id="TS%" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">True Shooting Percentage</th>
+<th id="TOV" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">Turnovers</th>
+<th id="PLUSMINUS" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 13; font-weight: bold" scope="col">Plus/Minus</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Name" style="background-color: #008348; color: #FFFFFF">Jayson Tatum</td>
+<td class="gt_row gt_right" headers="PPG" style="background-color: #008348; color: #FFFFFF">22.2</td>
+<td class="gt_row gt_right" headers="MPG" style="background-color: #008348; color: #FFFFFF">40.2</td>
+<td class="gt_row gt_right" headers="RPG" style="background-color: #008348; color: #FFFFFF">7.8</td>
+<td class="gt_row gt_right" headers="SPG" style="background-color: #008348; color: #FFFFFF">1.0</td>
+<td class="gt_row gt_right" headers="APG" style="background-color: #008348; color: #FFFFFF">7.2</td>
+<td class="gt_row gt_right" headers="BPG" style="background-color: #008348; color: #FFFFFF">0.6</td>
+<td class="gt_row gt_right" headers="FGA" style="background-color: #008348; color: #FFFFFF">19.6</td>
+<td class="gt_row gt_right" headers="FG%" style="background-color: #008348; color: #FFFFFF">38.8</td>
+<td class="gt_row gt_right" headers="3PA" style="background-color: #008348; color: #FFFFFF">7.6</td>
+<td class="gt_row gt_right" headers="3P%" style="background-color: #008348; color: #FFFFFF">26.3</td>
+<td class="gt_row gt_right" headers="TS%" style="background-color: #008348; color: #FFFFFF">50.5</td>
+<td class="gt_row gt_right" headers="TOV" style="background-color: #008348; color: #FFFFFF">16</td>
+<td class="gt_row gt_right" headers="PLUSMINUS" style="background-color: #008348; color: #FFFFFF">6</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="Name">Jaylen Brown</td>
+<td class="gt_row gt_right gt_striped" headers="PPG">20.8</td>
+<td class="gt_row gt_right gt_striped" headers="MPG">38.5</td>
+<td class="gt_row gt_right gt_striped" headers="RPG">5.4</td>
+<td class="gt_row gt_right gt_striped" headers="SPG">1.6</td>
+<td class="gt_row gt_right gt_striped" headers="APG">5.0</td>
+<td class="gt_row gt_right gt_striped" headers="BPG">0.8</td>
+<td class="gt_row gt_right gt_striped" headers="FGA">16.8</td>
+<td class="gt_row gt_right gt_striped" headers="FG%">44.0</td>
+<td class="gt_row gt_right gt_striped" headers="3PA">6.8</td>
+<td class="gt_row gt_right gt_striped" headers="3P%">23.5</td>
+<td class="gt_row gt_right gt_striped" headers="TS%">53.5</td>
+<td class="gt_row gt_right gt_striped" headers="TOV">14</td>
+<td class="gt_row gt_right gt_striped" headers="PLUSMINUS">14</td>
+</tr>
+</tbody><tfoot>
+<tr class="gt_sourcenotes odd">
+<td colspan="14" class="gt_sourcenote"><strong>By:</strong> Camden Rine | <strong>Source:</strong> Basketball Reference and StatMuse</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+<p>This makes the argument even clearer. When you directly line up the statistical profiles Jayson Tatum beats Brown in basically every category. Tatum averaged more points, more rebounds, more assists and more minutes. The glaring thing that stands out here is Tatum’s 7.2 assists per game. This is an astonishing number to have while also being the first scoring option, as he was creating offense in a multitude of ways throughout the series.</p>
+<p>Brown actually has a slight edge in the efficiency metrics as well as more steals and blocks, but the overall picture still largely favors Tatum. Tatum took more shots, handled more possessions and was asked to do much more in Boston’s offense. Tatum’s combination of scoring and facilitating show an overall more complete Final’s performance.</p>
+<p>Looking at the numbers, trends and visuals together, it seems clear why many people think Jayson Tatum was deserving of the Finals MVP over Jaylen Brown. Brown had some important moments in Game 1 and 2, but Tatum took over later in the series and really put the nail in the coffin on the Mavericks. With all the data considered, this has a chance to go up there with one of the biggest Finals MVP snubs of all time.</p>
 
 
 
